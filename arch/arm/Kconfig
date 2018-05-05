@@ -470,6 +470,8 @@ source "arch/arm/mach-keystone/Kconfig"
 
 source "arch/arm/mach-lpc32xx/Kconfig"
 
+source "arch/arm/mach-ls1024a/Kconfig"
+
 source "arch/arm/mach-mediatek/Kconfig"
 
 source "arch/arm/mach-meson/Kconfig"

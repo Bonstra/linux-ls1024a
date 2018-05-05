@@ -1,0 +1,40 @@
+Freescale LS1024A clock bindings
+================================
+
+Required properties:
+
+- compatible: Must be "fsl,ls1024a-clkcore", "syscon", "simple-mfd"
+- reg: Address and length of device register set
+- #clock-cells: Must be <1>
+- fsl,ls1024a-bypass-workaround: phandle to the mmio-sram region in IRAM where
+                                 the bootloader stored the clock generators
+                                 state
+
+Clock generator bypass bug workaround:
+
+The clock generators for each device are affected by a bug, which prevents
+reading the value of the bypass bit. To work around it, the bootloader keeps
+a mirror of the bypass bits state in IRAM. The clock driver will read thah
+state on init to determine the initial state of the clock generators. The
+driver will then keep track of that bit state in its own internal structures,
+allowing to free the IRAM region for other purposes.
+
+Example:
+
+	clkcore: clkcore@904b0000 {
+		compatible = "fsl,ls1024a-clkcore",
+			     "syscon", "simple-mfd";
+		reg = <0x904b0000 0x400>;
+		#clock-cells = <1>;
+		fsl,ls1024a-bypass-workaround = <&clk_bypass_bug>;
+	};
+
+The node in IRAM looks like this:
+	iram: iram@83000000 {
+		compatible = "mmio-sram";
+		[...]
+
+		clk_bypass_bug: clk_bypass_bug@fc00 {
+			reg = <0xfc00 0x400>;
+		};
+	};

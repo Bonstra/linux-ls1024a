@@ -389,6 +389,8 @@ dtb-$(CONFIG_ARCH_LPC18XX) += \
 dtb-$(CONFIG_ARCH_LPC32XX) += \
 	lpc3250-ea3250.dtb \
 	lpc3250-phy3250.dtb
+dtb-$(CONFIG_ARCH_LS1024A) += \
+	ls1024a-evm.dtb
 dtb-$(CONFIG_ARCH_WPCM450) += \
 	nuvoton-wpcm450-supermicro-x9sci-ln4f.dtb
 dtb-$(CONFIG_ARCH_NPCM7XX) += \

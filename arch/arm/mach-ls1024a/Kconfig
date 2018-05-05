@@ -1,0 +1,23 @@
+config ARCH_LS1024A
+	bool "Freescale LS1024A"
+	default n
+	depends on ARCH_MULTI_V7
+	select ARM_GIC
+	select ARM_GLOBAL_TIMER
+	select CLKSRC_ARM_GLOBAL_TIMER_SCHED_CLOCK
+	select HAVE_ARM_TWD if SMP
+	select HAVE_ARM_SCU
+	select HAVE_SMP
+	select CACHE_L2X0
+	select ARM_ERRATA_754322
+	select ARM_ERRATA_764369 if SMP
+	select CLKDEV_LOOKUP
+	select COMMON_CLK
+	select ARCH_HAS_RESET_CONTROLLER
+	select MFD_SYSCON
+	select POWER_RESET_SYSCON
+	select GPIOLIB
+	select MIGHT_HAVE_PCI
+	select PINCTRL
+	help
+	  This enables support for boards built around Freescale's LS1024A SoC

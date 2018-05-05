@@ -1,0 +1,173 @@
+// SPDX-License-Identifier: GPL-2.0
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/clock/ls1024a.h>
+#include <dt-bindings/reset/ls1024a.h>
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	compatible = "fsl,ls1024a";
+	interrupt-parent = <&gic>;
+
+	/*
+	 * The decompressor and also some bootloaders rely on a
+	 * pre-existing /chosen node to be available to insert the
+	 * command line and merge other ATAGS info.
+	 * Also for U-Boot there must be a pre-existing /memory node.
+	 */
+	chosen {};
+	memory { device_type = "memory"; reg = <0 0>; };
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		smp-bringup {
+			reg = <0x00000000 0x800>;
+		};
+	};
+
+	aliases {
+		/* Inverted serial0 and serial1 */
+		serial0 = &uart1;
+		serial1 = &uart0;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "fsl,ls1024a-smp";
+		cpu@900 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a9";
+			reg = <0x900>;
+		};
+		cpu@901 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a9";
+			reg = <0x901>;
+		};
+	};
+
+	scu@fff00000 {
+		compatible = "arm,cortex-a9-scu";
+		reg = <0xfff00000 0x100>;
+	};
+
+	global_timer@fff00200 {
+		compatible = "arm,cortex-a9-global-timer";
+		reg = <0xfff00200 0x20>;
+		interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
+		clocks = <&clkcore LS1024A_CLK_A9DP_MPU>;
+	};
+
+	local_timer@fff00600 {
+		compatible = "arm,cortex-a9-twd-timer";
+		reg = <0xfff00600 0x20>;
+		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
+		clocks = <&clkcore LS1024A_CLK_A9DP_MPU>;
+	};
+
+	local_watchdog@fff00620 {
+		compatible = "arm,cortex-a9-twd-wdt";
+		reg = <0xfff00620 0x20>;
+		interrupts = <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
+	};
+
+	gic: interrupt-controller@fff01000 {
+		compatible = "arm,cortex-a9-gic";
+		#interrupt-cells = <3>;
+		#address-cells = <1>;
+		interrupt-controller;
+		/* gic dist base, gic cpu base */
+		reg = <0xfff01000 0x1000>,
+		      <0xfff00100 0x100>;
+	};
+
+	l2: l2-cache {
+		compatible = "arm,pl310-cache";
+		reg = <0xfff10000 0x1000>;
+		interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+		cache-unified;
+		cache-level = <2>;
+	};
+
+	pmu {
+		compatible = "arm,cortex-a9-pmu";
+		interrupts =
+			<GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>,
+			<GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+	};
+
+	soc {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		iram: iram@83000000 {
+			compatible = "mmio-sram";
+			reg = <0x83000000 0x10000>;
+
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x83000000 0x10000>;
+
+			clk_bypass_bug: clk_bypass_bug@fc00 {
+				reg = <0xfc00 0x400>;
+			};
+		};
+
+		gpio: gpio@90470000 {
+			compatible = "fsl,ls1024a-gpio",
+				     "syscon", "simple-mfd";
+			reg = <0x90470000 0x200>;
+
+			pinctrl {
+				compatible = "fsl,ls1024a-pinctrl";
+			};
+		};
+
+		clkcore: clkcore@904b0000 {
+			compatible = "fsl,ls1024a-clkcore",
+				     "syscon", "simple-mfd";
+			reg = <0x904b0000 0x400>;
+			#clock-cells = <1>;
+			fsl,ls1024a-bypass-workaround = <&clk_bypass_bug>;
+			clkreset: reset-controller {
+				compatible = "fsl,ls1024a-reset";
+				#reset-cells = <1>;
+			};
+			syscon-reboot {
+				compatible = "syscon-reboot";
+				regmap = <&clkcore>;
+				/* DEVICE_RST_CNTRL */
+				offset = <0x00>;
+				/* PWR_ON_SOFT_RST */
+				mask = <0x01>;
+			};
+		};
+
+		uart0: uart@96300000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x96300000 0x100000>;
+			clocks = <&clkcore LS1024A_CLK_DUS>;
+			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			status = "disabled";
+		};
+
+		uart1: uart@96400000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x96400000 0x100000>;
+			clocks = <&clkcore LS1024A_CLK_DUS>;
+			interrupts = <GIC_SPI 27 IRQ_TYPE_LEVEL_HIGH>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			status = "disabled";
+		};
+	};
+};
+
