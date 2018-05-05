@@ -114,6 +114,13 @@ config RESET_LPC18XX
 	help
 	  This enables the reset controller driver for NXP LPC18xx/43xx SoCs.
 
+config RESET_LS1024A
+	bool "Freescale LS1024A Reset Driver" if COMPILE_TEST
+	default ARCH_LS1024A
+	help
+	  This enables the reset controller driver for the Freescale LS1024A
+	  reset controller.
+
 config RESET_MCHP_SPARX5
 	bool "Microchip Sparx5 reset driver"
 	depends on ARCH_SPARX5 || SOC_LAN966 || COMPILE_TEST

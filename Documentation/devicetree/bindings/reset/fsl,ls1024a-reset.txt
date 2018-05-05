@@ -1,0 +1,32 @@
+Freescale LS1024A reset controller
+==================================
+
+Please also refer to reset.txt in this directory for common reset
+controller binding usage.
+
+The reset controller node must be a sub-node of the clock & reset
+node on LS1024A SoC.
+
+The reset specifier is the offset in number of bits relative to the
+start of the clock and reset IO region.
+To set bit b of register at offset o:
+	(o << 3) | b
+For instance, to reset the PFE using the bit 0 of the PFE_RESET
+register at offset 0x108:
+	(0x108 << 3) | 0 --> 0x840
+
+Required properties:
+- compatible: should be "fsl,ls1024a-reset"
+- #reset-cells: must be set to 1
+
+Example:
+
+chip_rst: reset {
+	compatible = "fsl,ls1024a-reset";
+	#reset-cells = <1>;
+};
+
+&pfe {
+	resets = <&chip_rst 0x840>;
+	reset-names = "pfe";
+};

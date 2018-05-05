@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+#include "ls1024a.dtsi"
+
+/ {
+	model = "LS1024A EVM";
+	compatible = "fsl,ls1024a-evm", "fsl,ls1024a";
+
+	chosen {
+		bootargs = "console=ttyS0,115200n8 earlyprintk";
+		stdout-path = &uart1;
+	};
+};
+
+&uart1 {
+	status = "okay";
+};
