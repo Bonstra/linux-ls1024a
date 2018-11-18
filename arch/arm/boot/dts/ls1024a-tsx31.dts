@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+#include "ls1024a.dtsi"
+
+/ {
+	model = "QNAP TS-x31";
+	compatible = "qnap,tsx31", "fsl,ls1024a";
+
+	chosen {
+		bootargs = "console=ttyS0,115200n8 earlyprintk";
+		stdout-path = &uart1;
+	};
+
+	soc {
+		poweroff {
+			compatible = "qnap,power-off";
+			reg = <0x96300000 0x100000>;
+			clocks = <&clkcore LS1024A_CLK_DUS>;
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+};
+&uart1 {
+	status = "okay";
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_uart1>;
+};
+
