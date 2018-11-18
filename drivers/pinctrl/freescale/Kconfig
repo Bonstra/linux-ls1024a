@@ -191,6 +191,16 @@ config PINCTRL_IMX93
 	help
 	  Say Y here to enable the imx93 pinctrl driver
 
+config PINCTRL_LS1024A
+	bool "Freescale LS1024A pinctrl driver"
+	depends on ARCH_LS1024A
+	select GENERIC_PINCTRL_GROUPS
+	select GENERIC_PINMUX_FUNCTIONS
+	select GENERIC_PINCONF
+	select REGMAP
+	help
+	  Say Y here to enable the ls1024a pinctrl driver
+
 config PINCTRL_VF610
 	bool "Freescale Vybrid VF610 pinctrl driver"
 	depends on SOC_VF610

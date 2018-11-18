@@ -124,7 +124,7 @@
 				     "syscon", "simple-mfd";
 			reg = <0x90470000 0x200>;
 
-			pinctrl {
+			pinctrl: pinctrl {
 				compatible = "fsl,ls1024a-pinctrl";
 			};
 		};
@@ -167,6 +167,21 @@
 			reg-shift = <2>;
 			reg-io-width = <4>;
 			status = "disabled";
+		};
+	};
+};
+
+&pinctrl {
+	pinctrl_uart1: uart1 {
+		uart1 {
+			groups = "uart1_grp";
+			function = "uart1";
+		};
+	};
+	pinctrl_uart2: uart2 {
+		uart2 {
+			groups = "uart1_grp";
+			function = "uart2";
 		};
 	};
 };
