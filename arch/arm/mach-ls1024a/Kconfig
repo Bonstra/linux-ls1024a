@@ -19,5 +19,6 @@ config ARCH_LS1024A
 	select GPIOLIB
 	select MIGHT_HAVE_PCI
 	select PINCTRL
+	select PINCTRL_LS1024A
 	help
 	  This enables support for boards built around Freescale's LS1024A SoC
