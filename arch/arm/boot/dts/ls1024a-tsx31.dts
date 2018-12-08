@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
 /dts-v1/;
 #include "ls1024a.dtsi"
+#include <dt-bindings/gpio/gpio.h>
 
 / {
 	model = "QNAP TS-x31";
@@ -16,6 +17,22 @@
 			compatible = "qnap,power-off";
 			reg = <0x96300000 0x100000>;
 			clocks = <&clkcore LS1024A_CLK_DUS>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		hdd1-error {
+			gpios = <&gpio 47 GPIO_ACTIVE_LOW>;
+		};
+		hdd2-error {
+			gpios = <&gpio 46 GPIO_ACTIVE_LOW>;
+		};
+		hdd3-error {
+			gpios = <&gpio 45 GPIO_ACTIVE_LOW>;
+		};
+		hdd4-error {
+			gpios = <&gpio 44 GPIO_ACTIVE_LOW>;
 		};
 	};
 };
