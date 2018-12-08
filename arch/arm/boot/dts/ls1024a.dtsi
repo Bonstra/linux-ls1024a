@@ -120,9 +120,12 @@
 		};
 
 		gpio: gpio@90470000 {
+			#gpio-cells = <2>;
 			compatible = "fsl,ls1024a-gpio",
 				     "syscon", "simple-mfd";
 			reg = <0x90470000 0x200>;
+			gpio-controller;
+			gpio-ranges = <&pinctrl 0 0 64>;
 
 			pinctrl: pinctrl {
 				compatible = "fsl,ls1024a-pinctrl";
