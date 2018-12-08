@@ -406,6 +406,14 @@ config GPIO_LPC32XX
 	  Select this option to enable GPIO driver for
 	  NXP LPC32XX devices.
 
+config GPIO_LS1024A
+	tristate "Freescale LS1024A GPIO support"
+	default y if ARCH_LS1024A
+	depends on ARCH_LS1024A || COMPILE_TEST
+	select GPIO_GENERIC
+	help
+	  Say yes here to support GPIO on Freescale LS1024A SoCs.
+
 config GPIO_MB86S7X
 	tristate "GPIO support for Fujitsu MB86S7x Platforms"
 	help
