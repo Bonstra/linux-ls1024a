@@ -1,0 +1,71 @@
+Device tree bindings documentation for Freescale LS1024A SerDes PHY
+
+Required properties:
+- compatible		Must be "fsl,ls1024a-serdes-phy"
+- reg			One register specification for the SerDes block
+- #address-cells	Must be <1>
+- #size-cells		Must be <0>
+- resets		Reset bindings for each of the 3 SerDes PHY, ordered
+			from 0 to 2.
+
+
+Subnodes:
+Each one of the 3 SerDes instances are subnodes of the parent SerDes node.
+Their address is the index of the SerDes PHY (0 through 2). If a subnode is
+missing, the corresponding PHY instance is disabled.
+A device needing a PHY must use a phandle to the PHY instance subnode instead
+of the parent node.
+
+Required properties:
+- reg			Must be the SerDes PHY index (0-2)
+- #phy-cells		Must be <1>
+
+Optional properties:
+- fsl,pcie-external-clk	If present, this property tells the driver to use an
+			external 100 MHz clock for the SerDes PHYs used for
+			PCIe.
+- fsl,sata-external-clk	If present, this property tells the driver to use an
+			external 60 MHz clock for the SerDes PHYs used for
+			SATA.
+- fsl,sata-txlev	If present, override the TX_LEV value for the SerDes
+			PHYs used in SATA mode. Range 0-15.
+- fsl,pcie-polarity	Takes a value between 0 and 3, which indicates the
+			polarity of the differential pairs when used for PCIe
+			operation.
+			0 is normal polarity, which is the default if this
+			property is not present. The values 1 through 3 invert
+			polarity of the differential lines in an unspecified
+			way (due to a lack of hardware documentation).
+
+Example:
+
+phystat: phystat@90410000 {
+	compatible = "fsl,ls1024a-phystat",
+		     "syscon";
+	reg = <0x90410000 0x100>;
+};
+
+serdes@90590000 {
+	compatible = "fsl,ls1024a-serdes-phy";
+	reg = <0x90590000 0xc000>;
+	#address-cells = <1>;
+	#size-cells = <0>;
+	resets = <&clkreset LS1024A_SERDES_SERDES0_RESET>,
+		 <&clkreset LS1024A_SERDES_SERDES1_RESET>,
+		 <&clkreset LS1024A_SERDES_SERDES2_RESET>;
+	serdes0: serdes0@0 {
+		#phy-cells = <1>;
+		reg = <0>;
+		fsl,pcie-use-external-clk;
+	};
+	serdes1: serdes1@1 {
+		#phy-cells = <1>;
+		reg = <1>;
+		fsl,pcie-use-external-clk;
+		fsl,sata-txlev = <9>;
+	};
+	serdes2: serdes2@2 {
+		#phy-cells = <1>;
+		reg = <2>;
+	};
+};

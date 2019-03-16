@@ -37,6 +37,15 @@
 	};
 };
 
+&serdes0 {
+	fsl,pcie-use-external-clk;
+};
+
+&serdes1 {
+	fsl,pcie-use-external-clk;
+	fsl,sata-txlev = <9>;
+};
+
 &uart0 {
 	status = "okay";
 };

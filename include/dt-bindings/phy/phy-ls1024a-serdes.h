@@ -1,0 +1,10 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __PHY_LS1024A_SERDES_H__
+#define __PHY_LS1024A_SERDES_H__
+
+#define LS1024A_SERDES_TYPE_SATA 0
+#define LS1024A_SERDES_TYPE_PCIE 1
+#define LS1024A_SERDES_TYPE_SGMII 2
+
+#endif
+
