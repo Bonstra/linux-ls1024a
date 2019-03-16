@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/clock/ls1024a.h>
+#include <dt-bindings/phy/phy-ls1024a-serdes.h>
 #include <dt-bindings/reset/ls1024a.h>
 
 / {
@@ -119,6 +120,12 @@
 			};
 		};
 
+		phystat: phystat@90410000 {
+			compatible = "fsl,ls1024a-phystat",
+			             "syscon";
+			reg = <0x90410000 0x100>;
+		};
+
 		gpio: gpio@90470000 {
 			#gpio-cells = <2>;
 			compatible = "fsl,ls1024a-gpio",
@@ -149,6 +156,28 @@
 				offset = <0x00>;
 				/* PWR_ON_SOFT_RST */
 				mask = <0x01>;
+			};
+		};
+
+		serdes@90590000 {
+			compatible = "fsl,ls1024a-serdes-phy";
+			reg = <0x90590000 0xc000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			resets = <&clkreset LS1024A_SERDES_SERDES0_RESET>,
+			         <&clkreset LS1024A_SERDES_SERDES1_RESET>,
+			         <&clkreset LS1024A_SERDES_SERDES2_RESET>;
+			serdes0: serdes0@0 {
+				#phy-cells = <1>;
+				reg = <0>;
+			};
+			serdes1: serdes1@1 {
+				#phy-cells = <1>;
+				reg = <1>;
+			};
+			serdes2: serdes2@2 {
+				#phy-cells = <1>;
+				reg = <2>;
 			};
 		};
 
