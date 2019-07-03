@@ -200,6 +200,46 @@
 			reg-io-width = <4>;
 			status = "disabled";
 		};
+
+		sata: sata@9d000000 {
+			compatible = "fsl,ls1024a-sata", "generic-ahci";
+			reg = <0x9d000000 0x10000>;
+			interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>;
+			clocks =
+				<&clkcore LS1024A_CLK_SATA>,
+				<&clkcore LS1024A_CLK_SATA_OOB>,
+				<&clkcore LS1024A_CLK_SATA_PMU>;
+			clock-names = "axi", "oob", "pmu";
+			resets =
+				<&clkreset LS1024A_AXI_SATA_RST>,
+				<&clkreset LS1024A_SATA_OOB_RST>,
+				<&clkreset LS1024A_SATA_PMU_RST>,
+				<&clkreset LS1024A_PCIe_SATA_SATA0_RX_RST>,
+				<&clkreset LS1024A_PCIe_SATA_SATA0_TX_RST>,
+				<&clkreset LS1024A_PCIe_SATA_SATA1_RX_RST>,
+				<&clkreset LS1024A_PCIe_SATA_SATA1_TX_RST>;
+			reset-names =
+				"axi",
+				"oob",
+				"pmu",
+				"sata0_rx",
+				"sata0_tx",
+				"sata1_rx",
+				"sata1_tx";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+
+			sata0: sata-port@0 {
+				reg = <0>;
+				phys = <&serdes1 LS1024A_SERDES_TYPE_SATA>;
+			};
+
+			sata1: sata-port@1 {
+				reg = <1>;
+				phys = <&serdes2 LS1024A_SERDES_TYPE_SATA>;
+			};
+		};
 	};
 };
 
