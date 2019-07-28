@@ -1,0 +1,30 @@
+Freescale LS1024A I2C bus controller
+====================================
+
+Required properties:
+- compatible: should be "fsl,ls1024a-i2c"
+- reg: controller registers
+- #address-cells: must be <1>
+- #size-cells: must be <0>
+- interrupts: the interrupt for the I2C controller
+- clocks: the reference clock from which the bus clock will be derived
+- resets: external I2C controller reset
+
+Optional properties:
+- clock-frequency:
+    bus clock frequency to operate at, in hertz. This controller supports
+    high-speed mode, which allows a bus frequency up to 3400000 Hz. If this
+    property is not specified, the maximum frequency for standard I2C,
+    100000 Hz is used.
+
+Example:
+
+i2c: i2c@9049c000 {
+	compatible = "fsl,ls1024a-i2c";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	reg = <0x9049c000 0x20>;
+	interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>;
+	resets = <&clkreset LS1024A_AXI_I2CSPI_RST>;
+	clocks = <&clkcore LS1024A_CLK_I2CSPI>;
+};

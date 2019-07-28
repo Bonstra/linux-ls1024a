@@ -761,6 +761,13 @@ config I2C_LPC2K
 	  This driver can also be built as a module.  If so, the module
 	  will be called i2c-lpc2k.
 
+config I2C_LS1024A
+	tristate "I2C bus support for the Freescale LS1024A platform"
+	depends on OF && (ARCH_LS1024A ||COMPILE_TEST)
+	help
+	  This drivers supports the I2C interface found on the Freescale
+	  LS1024A SoC. Only master mode is currently supported.
+
 config I2C_MLXBF
         tristate "Mellanox BlueField I2C controller"
         depends on MELLANOX_PLATFORM && ARM64
