@@ -37,6 +37,28 @@
 	};
 };
 
+&i2c {
+	clock-frequency = <400000>;
+	status = "okay";
+
+	s35390a@30 {
+		compatible = "sii,s35390a";
+		reg = <0x30>;
+	};
+
+	at24c04@50 {
+		compatible = "atmel,24c04";
+		reg = <0x50>;
+		read-only;
+	};
+
+	at24c04@56 {
+		compatible = "atmel,24c04";
+		reg = <0x56>;
+		read-only;
+	};
+};
+
 &serdes0 {
 	fsl,pcie-use-external-clk;
 };
