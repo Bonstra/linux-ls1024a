@@ -150,6 +150,17 @@
 			status = "disabled";
 		};
 
+		usb3_phy: usb3_phy@904a0000 {
+			compatible = "fsl,ls1024a-usb3-phy";
+			reg = <0x904a0000 0x800>;
+			clocks = <&clkcore LS1024A_CLK_REF>;
+			#phy-cells = <0>;
+			resets = <&clkreset LS1024A_USB_USB1_PHY_RESET>,
+			         <&clkreset LS1024A_USB_USB1_UTMI_RESET>;
+			reset-names = "phy", "utmi";
+			status = "disabled";
+		};
+
 		clkcore: clkcore@904b0000 {
 			compatible = "fsl,ls1024a-clkcore",
 				     "syscon", "simple-mfd";
@@ -250,6 +261,21 @@
 				reg = <1>;
 				phys = <&serdes2 LS1024A_SERDES_TYPE_SATA>;
 			};
+		};
+
+		usb3: usb3@9f000000 {
+			compatible = "snps,dwc3";
+			reg = <0x9f000000 0xcfff>;
+			interrupts = <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
+			phys = <&usb3_phy>;
+			phy-names = "usb3-phy";
+			clocks =
+				<&clkcore LS1024A_CLK_USB1>,
+				<&clkcore LS1024A_CLK_USB1>,
+				<&clkcore LS1024A_CLK_INT_REF>;
+			clock-names = "ref", "bus_early", "suspend";
+			snps,usb3_lpm_capable;
+			status = "disabled";
 		};
 	};
 };
