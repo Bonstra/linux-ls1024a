@@ -1,0 +1,26 @@
+Freescale LS1024A Watchdog Timer
+
+The watchdog timer node must be a subnode of the timer node.
+It will share the same resources.
+
+Required properties:
+- compatible: Must be "fsl,ls1024a-wdt"
+- fsl,clkcore: phandle to the clkcore node syscon
+
+Optional properties:
+- timeout-sec : Contains the default watchdog timeout in seconds
+
+Example:
+
+timer@90450000 {
+	compatible = "fsl,ls1024a-timer",
+		     "syscon", "simple-mfd";
+	reg = <0x90450000 0x100>;
+	clocks = <&clkcore LS1024A_CLK_RTC_TIM>;
+	resets = <&clkreset LS1024A_AXI_RTC_TIM_RST>;
+	watchdog {
+		compatible = "fsl,ls1024a-wdt";
+		fsl,clkcore = <&clkcore>;
+		timeout-sec = <5>;
+	};
+};
