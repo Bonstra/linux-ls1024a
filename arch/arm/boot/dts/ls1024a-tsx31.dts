@@ -83,3 +83,11 @@
 	status = "okay";
 };
 
+&usb3_phy {
+	status = "okay";
+};
+
+&usb3 {
+	dr_mode = "host";
+	status = "okay";
+};
