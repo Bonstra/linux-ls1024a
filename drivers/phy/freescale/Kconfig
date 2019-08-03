@@ -58,3 +58,14 @@ config PHY_LS2014A_SERDES
 	  This option enables support for the Snowbush SerDes PHY found
 	  in Freescale LS1024A SoC.
 	  It is required for PCIe and SATA operation on those SoCs.
+
+config PHY_LS2014A_USB3
+	tristate "Freescale LS1024A USB3.0 PHY driver"
+	depends on ARCH_LS1024A || COMPILE_TEST
+	depends on HAS_IOMEM
+	select GENERIC_PHY
+	select MFD_SYSCON
+	help
+	  This option enables support for the USB 3.0 PHY found
+	  in Freescale LS1024A SoC.
+	  It is required for USB 3.0 operation on those SoCs.

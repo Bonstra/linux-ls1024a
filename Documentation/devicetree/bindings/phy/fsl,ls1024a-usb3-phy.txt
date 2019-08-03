@@ -1,0 +1,15 @@
+Freescale LS1024A USB 3.0 PHY
+
+Required properties:
+- compatible: "fsl,ls1024a-usb3-phy"
+- reg: registers for the PHY device
+- #phy-cells: should be 0
+- resets: phandles to the "phy" and "utmi" reset controllers
+- reset-names: should contain both "phy" and "utmi"
+
+Optional properties:
+- clocks: phandle to the system reference clock. Mandatory if
+  fsl,use-external-clock is not set. Only 24 MHz and 48 MHz clocks are
+  supported.
+- fsl,use-external-clock: If an external 100 MHz differential clock is
+  provided, use this clock for the PHY.
