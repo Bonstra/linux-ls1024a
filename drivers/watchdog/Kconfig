@@ -995,6 +995,15 @@ config VISCONTI_WATCHDOG
 	  Say Y here to include support for the watchdog timer in Toshiba
 	  Visconti SoCs.
 
+config LS1024A_WATCHDOG
+	tristate "LS1024A watchdog"
+	depends on OF && (ARCH_LS1024A || COMPILE_TEST)
+	select WATCHDOG_CORE
+	select SYSCON
+	help
+	  Say Y here to include support for the watchdog timer embedded
+	  into the Freescale LS1024A SoC.
+
 config MSC313E_WATCHDOG
 	tristate "MStar MSC313e watchdog"
 	depends on ARCH_MSTARV7 || COMPILE_TEST
