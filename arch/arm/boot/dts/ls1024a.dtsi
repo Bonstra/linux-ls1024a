@@ -126,26 +126,6 @@
 			reg = <0x90410000 0x100>;
 		};
 
-		clkcore: clkcore@904b0000 {
-			compatible = "fsl,ls1024a-clkcore",
-				     "syscon", "simple-mfd";
-			reg = <0x904b0000 0x400>;
-			#clock-cells = <1>;
-			fsl,ls1024a-bypass-workaround = <&clk_bypass_bug>;
-			clkreset: reset-controller {
-				compatible = "fsl,ls1024a-reset";
-				#reset-cells = <1>;
-			};
-			syscon-reboot {
-				compatible = "syscon-reboot";
-				regmap = <&clkcore>;
-				/* DEVICE_RST_CNTRL */
-				offset = <0x00>;
-				/* PWR_ON_SOFT_RST */
-				mask = <0x01>;
-			};
-		};
-
 		gpio: gpio@90470000 {
 			#gpio-cells = <2>;
 			compatible = "fsl,ls1024a-gpio",
@@ -179,6 +159,26 @@
 			         <&clkreset LS1024A_USB_USB1_UTMI_RESET>;
 			reset-names = "phy", "utmi";
 			status = "disabled";
+		};
+
+		clkcore: clkcore@904b0000 {
+			compatible = "fsl,ls1024a-clkcore",
+				     "syscon", "simple-mfd";
+			reg = <0x904b0000 0x400>;
+			#clock-cells = <1>;
+			fsl,ls1024a-bypass-workaround = <&clk_bypass_bug>;
+			clkreset: reset-controller {
+				compatible = "fsl,ls1024a-reset";
+				#reset-cells = <1>;
+			};
+			syscon-reboot {
+				compatible = "syscon-reboot";
+				regmap = <&clkcore>;
+				/* DEVICE_RST_CNTRL */
+				offset = <0x00>;
+				/* PWR_ON_SOFT_RST */
+				mask = <0x01>;
+			};
 		};
 
 		serdes@90590000 {
