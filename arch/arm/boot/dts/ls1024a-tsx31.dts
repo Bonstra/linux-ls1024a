@@ -12,6 +12,16 @@
 		stdout-path = &uart1;
 	};
 
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		pfe@0x03800000 {
+			reg = <0x03400000 0xc00000>;
+			no-map;
+		};
+	};
+
 	a9dp_opp_table: a9dp_opp_table {
 		compatible = "operating-points-v2";
 		opp-shared;
