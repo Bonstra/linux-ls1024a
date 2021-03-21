@@ -151,6 +151,18 @@
 			};
 		};
 
+		ls_spi: spi@90498000 {
+			compatible = "snps,dw-apb-ssi";
+			reg = <0x90498000 0x1000>;
+			interrupts = <GIC_SPI 29 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clkcore LS1024A_CLK_DUS>;
+			clock-names = "ssi_clk";
+			reg-io-width = <4>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
+
 		i2c: i2c@9049c000 {
 			compatible = "fsl,ls1024a-i2c";
 			#address-cells = <1>;
@@ -232,6 +244,18 @@
 			interrupts = <GIC_SPI 27 IRQ_TYPE_LEVEL_HIGH>;
 			reg-shift = <2>;
 			reg-io-width = <4>;
+			status = "disabled";
+		};
+
+		hs_spi: spi@96500000 {
+			compatible = "snps,dw-apb-ssi";
+			reg = <0x96500000 0x100000>;
+			interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clkcore LS1024A_CLK_DUS>;
+			clock-names = "ssi_clk";
+			reg-io-width = <4>;
+			#address-cells = <1>;
+			#size-cells = <0>;
 			status = "disabled";
 		};
 
