@@ -12,6 +12,21 @@
 		stdout-path = &uart1;
 	};
 
+	a9dp_opp_table: a9dp_opp_table {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-1200000000 {
+			opp-hz = /bits/ 64 <1200000000>;
+		};
+		opp-600000000 {
+			opp-hz = /bits/ 64 <600000000>;
+		};
+		opp-300000000 {
+			opp-hz = /bits/ 64 <300000000>;
+		};
+	};
+
 	soc {
 		poweroff {
 			compatible = "qnap,power-off";
@@ -35,6 +50,13 @@
 			gpios = <&gpio 44 GPIO_ACTIVE_LOW>;
 		};
 	};
+};
+
+&cpu0 {
+	operating-points-v2 = <&a9dp_opp_table>;
+};
+&cpu1 {
+	operating-points-v2 = <&a9dp_opp_table>;
 };
 
 &i2c {
