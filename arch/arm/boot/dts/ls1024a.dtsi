@@ -146,6 +146,24 @@
 			};
 		};
 
+		pci_usb_ctrl: pci_usb_ctrl@90460000 {
+			compatible = "fsl,ls1024a-pci-usb-ctrl",
+			             "syscon", "simple-mfd";
+			reg = <0x90460000 0x10000>;
+			pcie0_intc: pcie0-interrupt-controller {
+				interrupt-controller;
+				#address-cells = <0>;
+				#interrupt-cells = <1>;
+				interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
+			};
+			pcie1_intc: pcie1-interrupt-controller {
+				interrupt-controller;
+				#address-cells = <0>;
+				#interrupt-cells = <1>;
+				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
+			};
+		};
+
 		gpio: gpio@90470000 {
 			#gpio-cells = <2>;
 			compatible = "fsl,ls1024a-gpio",
@@ -264,6 +282,72 @@
 			reg-io-width = <4>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+			status = "disabled";
+		};
+
+		pcie0: pcie@98000000 {
+			compatible = "fsl,ls1024a-pcie";
+			reg = <0x98000000 0x0080000>, /* IP registers */
+			      <0xaff10000 0x0020000>; /* Configuration space */
+			reg-names = "dbi", "config";
+			#address-cells = <3>;
+			#size-cells = <2>;
+			device_type = "pci";
+			bus-range = <0x00 0xff>;
+			ranges = <0x81000000 0 0x00000000 0xaff00000 0 0x00010000
+				  0x82000000 0 0x00000000 0xa0000000 0 0x0fe00000>;
+			interrupt-parent = <&pcie0_intc>;
+			interrupts = <12>;
+			interrupt-names = "msi";
+			#interrupt-cells = <1>;
+			clocks = <&clkcore LS1024A_CLK_PCIE0>;
+			clock-names = "axi";
+			resets = <&clkreset LS1024A_AXI_PCIE0_RST>,
+			         <&clkreset LS1024A_PCIe_SATA_PCIE0_PWR_RST>,
+			         <&clkreset LS1024A_PCIe_SATA_PCIE0_REG_RST>;
+			reset-names = "axi", "power", "regs";
+			phys = <&serdes0 LS1024A_SERDES_TYPE_PCIE>;
+			phy-names = "bus";
+			num-lanes = <1>;
+			fsl,port-index = <0>;
+			interrupt-map-mask = <0 0 0 7>;
+			interrupt-map = <0 0 0 1 &pcie0_intc 0>, /* INTA */
+					<0 0 0 2 &pcie0_intc 2>, /* INTB */
+					<0 0 0 3 &pcie0_intc 4>, /* INTC */
+					<0 0 0 4 &pcie0_intc 6>; /* INTD */
+			status = "disabled";
+		};
+
+		pcie1: pcie@99000000 {
+			compatible = "fsl,ls1024a-pcie";
+			reg = <0x99000000 0x0080000>, /* IP registers */
+			      <0xbff10000 0x0020000>; /* Configuration space */
+			reg-names = "dbi", "config";
+			#address-cells = <3>;
+			#size-cells = <2>;
+			device_type = "pci";
+			bus-range = <0x00 0xff>;
+			ranges = <0x81000000 0 0x00000000 0xbff00000 0 0x00010000
+				  0x82000000 0 0x00000000 0xb0000000 0 0x0fe00000>;
+			interrupt-parent = <&pcie1_intc>;
+			interrupts = <12>;
+			interrupt-names = "msi";
+			#interrupt-cells = <1>;
+			clocks = <&clkcore LS1024A_CLK_PCIE1>;
+			clock-names = "axi";
+			resets = <&clkreset LS1024A_AXI_PCIE1_RST>,
+			         <&clkreset LS1024A_PCIe_SATA_PCIE1_PWR_RST>,
+			         <&clkreset LS1024A_PCIe_SATA_PCIE1_REG_RST>;
+			reset-names = "axi", "power", "regs";
+			phys = <&serdes1 LS1024A_SERDES_TYPE_PCIE>;
+			phy-names = "bus";
+			num-lanes = <1>;
+			fsl,port-index = <1>;
+			interrupt-map-mask = <0 0 0 7>;
+			interrupt-map = <0 0 0 1 &pcie1_intc 0>, /* INTA */
+					<0 0 0 2 &pcie1_intc 2>, /* INTB */
+					<0 0 0 3 &pcie1_intc 4>, /* INTC */
+					<0 0 0 4 &pcie1_intc 6>; /* INTD */
 			status = "disabled";
 		};
 
