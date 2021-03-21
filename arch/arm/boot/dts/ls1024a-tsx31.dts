@@ -103,6 +103,28 @@
 	pinctrl-0 = <&pinctrl_uart1>;
 };
 
+&ls_spi {
+	num-cs = <1>;
+	/* Using a GPIO line is a workaround to enable the driver to really
+	 * handle the chip select line. Otherwise, the controller releases the
+	 * chip select as soon as the Tx FIFO is empty, which happens too
+	 * quickly with a Tx FIFO depth of 8 words.
+	 */
+	cs-gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_spi>;
+	status = "okay";
+
+	nor@0 {
+		compatible = "en25q80b", "en25q80a", "jedec,spi-nor", "spidev";
+		reg = <0>;
+		spi-max-frequency = <4000000>;
+		spi-cpha;
+		spi-cpol;
+		m25p,fast-read;
+	};
+};
+
 &sata {
 	ports-implemented = <3>;
 	status = "okay";
