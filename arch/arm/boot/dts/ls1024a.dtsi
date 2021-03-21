@@ -293,6 +293,25 @@
 };
 
 &pinctrl {
+	/* UART0 with two wire */
+	pinctrl_uart0: uart0 {
+		uart0 {
+			groups = "gpio08_grp", "gpio09_grp";
+			function = "uart0";
+		};
+	};
+	pinctrl_uart0_rts: uart0_rts {
+		uart0 {
+			groups = "gpio10_grp";
+			function = "uart0";
+		};
+	};
+	pinctrl_uart0_cts: uart0_cts {
+		uart0 {
+			groups = "gpio11_grp";
+			function = "uart0";
+		};
+	};
 	pinctrl_uart1: uart1 {
 		uart1 {
 			groups = "uart1_grp";
@@ -303,6 +322,56 @@
 		uart2 {
 			groups = "uart1_grp";
 			function = "uart2";
+		};
+	};
+	/* High speed SPI */
+	pinctrl_spi_2: spi_2 {
+		spi_2 {
+			groups = "spi_2_rxd_grp";
+			function = "spi";
+		};
+	};
+	pinctrl_spi_2_ss0: spi_2_ss0 {
+		spi_2 {
+			groups = "spi_2_ss0_grp";
+			function = "spi";
+		};
+	};
+	pinctrl_spi_2_ss1: spi_2_ss1 {
+		spi_2 {
+			groups = "spi_2_ss1_grp";
+			function = "spi";
+		};
+	};
+	/* Low speed SPI */
+	pinctrl_spi: spi {
+		spi {
+			groups = "spi_sclk_grp", "spi_rxd_grp", "spi_txd_grp";
+			function = "spi";
+		};
+	};
+	pinctrl_spi_ss0: spi_ss0 {
+		spi {
+			groups = "spi_ss0_grp";
+			function = "spi";
+		};
+	};
+	pinctrl_spi_ss1: spi_ss1 {
+		spi {
+			groups = "spi_ss1_grp";
+			function = "spi";
+		};
+	};
+	pinctrl_spi_ss2: spi_ss2 {
+		spi {
+			groups = "spi_ss2_grp";
+			function = "spi";
+		};
+	};
+	pinctrl_spi_ss3: spi_ss3 {
+		spi {
+			groups = "spi_ss3_grp";
+			function = "spi";
 		};
 	};
 };
