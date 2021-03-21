@@ -1,0 +1,8 @@
+* Freescale LS1024A PCIe interface
+
+This PCIe host controller is based on the Synopsys DesignWare PCIe IP
+and thus inherits all the common properties defined in designware-pcie.txt.
+
+Required properties:
+- compatible: "fsl,ls1024a-pcie"
+
