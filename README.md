@@ -17,27 +17,28 @@ of the various frameworks which were introduced since the outdated 3.2.26
 kernel Freescale is providing (common clock framework, device tree, pinctrl and
 PHY frameworks).
 
+
 What's working:
 ---------------
 
 - Dual Cortex A9 SMP
+- UART0
 - UART1
 - Clock controller
 - Pin muxing
 - GPIOs
+- PCIe
 - USB 3.0 in host mode
 - SATA
 - I2C
+- SPI
+- Simple CPU frequency scaling
 - Watchdog timer
 - Powering off using PIC on UART0
 
 What's NOT working yet (but I'll be working on it soon):
 --------------------------------------------------------
 
-- UART0
-- PCIe
-- SPI
-- Simple CPU frequency scaling
 - Blob-less PFE (Gigabit ethernet)
 - NAND controller + expansion bus
 - DMA controller
@@ -72,3 +73,18 @@ Known issues:
 - CPU1 cannot be brought back up when put offline
 - System may hang without a clear reason (watchdog reset, no trace on serial
   console). Happens rarely, which make it even the more difficult to debug.
+
+Changelog:
+----------
+
+2021-03-21:
+
+- Added PCIe driver
+- UART0 and SPI support
+- Enabled SPI NOR flash
+- Added simple CPU frequency scaling
+- Rebased on Linux v5.11
+- Various SerDes PHY changes
+- Minor watchdog changes
+- Disabled Cortex-A9 global timer as it prevents booting when SMP is enabled
+- CPU nodes fixes in DT
