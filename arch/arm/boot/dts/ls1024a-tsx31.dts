@@ -92,6 +92,9 @@
 
 &uart0 {
 	status = "okay";
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_uart0>;
 };
 &uart1 {
 	status = "okay";
