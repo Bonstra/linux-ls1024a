@@ -125,6 +125,14 @@
 	};
 };
 
+&pcie0 {
+	status = "okay";
+};
+
+&pcie1 {
+	status = "okay";
+};
+
 &sata {
 	ports-implemented = <3>;
 	status = "okay";
