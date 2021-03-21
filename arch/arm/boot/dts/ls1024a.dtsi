@@ -68,6 +68,7 @@
 		reg = <0xfff00200 0x20>;
 		interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
 		clocks = <&clkcore LS1024A_CLK_A9DP_MPU>;
+		status = "disabled";
 	};
 
 	local_timer@fff00600 {
