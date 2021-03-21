@@ -3,8 +3,7 @@ config ARCH_LS1024A
 	default n
 	depends on ARCH_MULTI_V7
 	select ARM_GIC
-	select ARM_GLOBAL_TIMER
-	select CLKSRC_ARM_GLOBAL_TIMER_SCHED_CLOCK
+	select ARM_GLOBAL_TIMER if !SMP
 	select HAVE_ARM_TWD if SMP
 	select HAVE_ARM_SCU
 	select HAVE_SMP
