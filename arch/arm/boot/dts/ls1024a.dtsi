@@ -38,16 +38,23 @@
 	cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
-		enable-method = "fsl,ls1024a-smp";
-		cpu@900 {
+		cpu0: cpu@900 {
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <0x900>;
+			enable-method = "fsl,ls1024a-smp";
+			next-level-cache = <&l2>;
+			clocks = <&clkcore LS1024A_CLK_A9DP>;
+			clock-names = "cpu";
 		};
-		cpu@901 {
+		cpu1: cpu@901 {
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <0x901>;
+			enable-method = "fsl,ls1024a-smp";
+			next-level-cache = <&l2>;
+			clocks = <&clkcore LS1024A_CLK_A9DP>;
+			clock-names = "cpu";
 		};
 	};
 
