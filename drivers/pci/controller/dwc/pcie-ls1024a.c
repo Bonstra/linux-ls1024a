@@ -545,3 +545,18 @@ static struct platform_driver ls1024a_pcie_driver = {
 };
 builtin_platform_driver(ls1024a_pcie_driver);
 
+/* Dummy PCIe INTC driver to satisfy PCIe device's dependency on those
+ * suppliers */
+static const struct of_device_id ls1024a_pcie_intc_of_match[] = {
+	{ .compatible = "fsl,ls1024a-pcie-intc", },
+	{},
+};
+
+static struct platform_driver ls1024a_pcie_intc_driver = {
+	.driver = {
+		.name	= "ls1024a-pcie-intc",
+		.of_match_table = of_match_ptr(ls1024a_pcie_intc_of_match),
+		.suppress_bind_attrs = true,
+	},
+};
+builtin_platform_driver(ls1024a_pcie_intc_driver);

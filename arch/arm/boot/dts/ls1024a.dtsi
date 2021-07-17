@@ -151,12 +151,14 @@
 			             "syscon", "simple-mfd";
 			reg = <0x90460000 0x10000>;
 			pcie0_intc: pcie0-interrupt-controller {
+				compatible = "fsl,ls1024a-pcie-intc";
 				interrupt-controller;
 				#address-cells = <0>;
 				#interrupt-cells = <1>;
 				interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
 			};
 			pcie1_intc: pcie1-interrupt-controller {
+				compatible = "fsl,ls1024a-pcie-intc";
 				interrupt-controller;
 				#address-cells = <0>;
 				#interrupt-cells = <1>;
