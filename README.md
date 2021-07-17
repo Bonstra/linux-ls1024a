@@ -77,6 +77,17 @@ Known issues:
 Changelog:
 ----------
 
+2022-07-12:
+- Rebase on v5.18
+
+2022-02-25:
+- Rebase on v5.16
+
+2021-07-17:
+
+- Rebase on v5.13
+- Fix PCIe controller supplier dependency issue
+
 2021-03-21:
 
 - Added PCIe driver
