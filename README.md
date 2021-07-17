@@ -1,7 +1,7 @@
-LS1024A SoC support in Linux 5.x
+LS1024A SoC support in Linux 6.x
 ================================
 
-This repository contains a v5.x Linux kernel with additional drivers and
+This repository contains a v6.x Linux kernel with additional drivers and
 support for Freescale's LS1024A SoC and the QNAP TS-x31 family of NAS machines.
 
 My goal is to get a QNAP TS-x31 NAS running with most features on a v5.x Linux
@@ -71,11 +71,23 @@ Known issues:
 -------------
 
 - CPU1 cannot be brought back up when put offline
-- System may hang without a clear reason (watchdog reset, no trace on serial
-  console). Happens rarely, which make it even the more difficult to debug.
 
 Changelog:
 ----------
+
+2022-12-17:
+- Rebase on v6.1
+
+2022-07-12:
+- Rebase on v5.18
+
+2022-02-25:
+- Rebase on v5.16
+
+2021-07-17:
+
+- Rebase on v5.13
+- Fix PCIe controller supplier dependency issue
 
 2021-03-21:
 
